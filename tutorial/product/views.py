@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import TemplateView
 from .models import Price
+from .models import Product
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -28,6 +29,21 @@ class CreateCheckoutSessionView(View):
             cancel_url=domain + '/cancel/',
         )
         return redirect(checkout_session.url)
+
+
+class ProductLandingPageView(TemplateView):
+    template_name = "landing.html"
+
+    def get_context_data(self, **kwargs):
+        product = Product.objects.get(name="Book")
+        prices = Price.objects.filter(product=product)
+        context = super(ProductLandingPageView,
+                        self).get_context_data(**kwargs)
+        context.update({
+            "product": product,
+            "prices": prices
+        })
+        return context
 
 
 class SuccessView(TemplateView):
