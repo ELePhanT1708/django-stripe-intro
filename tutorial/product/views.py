@@ -1,18 +1,17 @@
 import stripe
 from django.conf import settings
-from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import TemplateView
-from .models import Price
-from .models import Product
+
+from .models import Item
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
-        price = Price.objects.get(id=self.kwargs["pk"])
+        product = Item.objects.get(stripe_product_id=self.kwargs["stripe_product_id"])
         domain = "https://yourdomain.com"
         if settings.DEBUG:
             domain = "http://127.0.0.1:8000"
@@ -20,7 +19,7 @@ class CreateCheckoutSessionView(View):
             payment_method_types=['card'],
             line_items=[
                 {
-                    'price': price.stripe_price_id,
+                    'price': product.stripe_product_id,
                     'quantity': 1,
                 },
             ],
@@ -35,13 +34,11 @@ class ProductLandingPageView(TemplateView):
     template_name = "landing.html"
 
     def get_context_data(self, **kwargs):
-        product = Product.objects.get(name="Book")
-        prices = Price.objects.filter(product=product)
+        products = Item.objects.all()
         context = super(ProductLandingPageView,
                         self).get_context_data(**kwargs)
         context.update({
-            "product": product,
-            "prices": prices
+            "products": products,
         })
         return context
 

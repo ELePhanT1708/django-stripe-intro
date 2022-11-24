@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+{% load static %}
 <head>
     <title>Buy cool new product</title>
     <link rel="stylesheet" href="style.css">
@@ -9,24 +9,32 @@
 </head>
 
 <body>
-    <section>
+    <section align="center">
+        {% for product in products %}
         <div class="product">
             <div class="description">
                 <h3>{{ product.name }}</h3>
-                <hr />
-                {% for price in prices %}
+                <p> {{ product.description }} </p>
+                {%if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" width="250" />
+                {%else%}
+                <p> Doesn't have a picture of this Item </p>
+
+                {%endif%}
+
 
                 <div>
-                    <h5>${{ price.get_display_price }}</h5>
-                    <form action="{% url 'create-checkout-session' price.id %}" method="POST">
+                    <h3>${{ product.get_display_price }}</h3>
+                    <form action="{% url 'create-checkout-session' product.stripe_product_id %}" method="POST">
                         {% csrf_token %}
-                        <button type="submit">Checkout</button>
+                        <button classtype="submit">Buy now!</button>
                     </form>
                 </div>
+                 <hr />
 
-                {% endfor %}
             </div>
         </div>
+        {% endfor %}
     </section>
 </body>
 

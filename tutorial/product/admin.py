@@ -1,14 +1,13 @@
 from django.contrib import admin
-from .models import Product, Price
+from .models import Item
 
-
-class PriceInlineAdmin(admin.TabularInline):
-    model = Price
-    extra = 0
 
 
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [PriceInlineAdmin]
+    list_display = ('name', 'stripe_product_id', 'price')
+    search_fields = ('name', 'price')
+    ordering = ['price']
 
 
-admin.site.register(Product, ProductAdmin)
+admin.site.register(Item, ProductAdmin)
+
