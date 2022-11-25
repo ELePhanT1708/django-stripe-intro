@@ -5,16 +5,20 @@
 (Если есть докер десктоп) 
 
 После клонирования моего репозитория нужно:
-запустить docker-compose.yml и проект соберется сам !! 
-docker-compose up --build (in 'tutorial' directory)
+1. Запустить Docker Desktop
+
+2. docker-compose up --build (in 'tutorial' directory)
 
 И ищем сайт по http://localhost:8000/items/
 
 
 (Если нет докера) После клонирования моего репозитория нужно:
-1. venv with all dependencies in requirements.txt
+1. Сделать виртуальное окружение у себя
+----- python -m venv test_env ( в корне клонированного репозитория)
+.\test_env\Scripts\Activate.ps1 (активируем окружение ) 
+pip install -r .\requirements.txt (устанавливаем необходимые зависимости) 
+py .\tutorial\manage.py runserver (запускаем сервер )
 
-будет запустить сервер и по  ти по ссылке 
 http://localhost:8000/items/
 и мы увидим список существующих товаров доступных для покупки .  
 по кнопке Buy now вы перейдете на формочку stripe для оплаты.
