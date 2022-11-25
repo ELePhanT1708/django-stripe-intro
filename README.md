@@ -16,16 +16,16 @@
 1. Сделать виртуальное окружение у себя
 
 
------ python -m venv test_env ( в корне клонированного репозитория)
+- python -m venv test_env ( в корне клонированного репозитория)
 
 
-.\test_env\Scripts\Activate.ps1 (активируем окружение ) 
+- .\test_env\Scripts\Activate.ps1 (активируем окружение ) 
 
 
-pip install -r .\requirements.txt (устанавливаем необходимые зависимости) 
+- pip install -r .\requirements.txt (устанавливаем необходимые зависимости) 
 
 
-py .\tutorial\manage.py runserver (запускаем сервер )
+- py .\tutorial\manage.py runserver (запускаем сервер )
 
 http://localhost:8000/items/
 и мы увидим список существующих товаров доступных для покупки .  
