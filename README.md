@@ -6,6 +6,7 @@
 
 После клонирования моего репозитория нужно:
 запустить docker-compose.yml и проект соберется сам !! 
+docker-compose up --build (in 'tutorial' directory)
 
 И ищем сайт по http://localhost:8000/items/
 
