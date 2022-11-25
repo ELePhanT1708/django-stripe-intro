@@ -1,5 +1,9 @@
+import json
+from typing import List
+
 import stripe
 from django.conf import settings
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import TemplateView
@@ -28,6 +32,31 @@ class CreateCheckoutSessionView(View):
             cancel_url=domain + '/cancel/',
         )
         return redirect(checkout_session.url)
+
+
+def calculate_order_amount(items: List[Item]):
+    return [item.price for item in items].sum()
+
+
+class CreateIntentPayment(View):
+
+    def post(self, request, *args, **kwargs):
+        try:
+            product = Item.objects.get(stripe_product_id=self.kwargs["stripe_product_id"])
+            # Create a PaymentIntent with the order amount and currency
+            intent = stripe.PaymentIntent.create(
+                amount=product.price,
+                currency='usd',
+                automatic_payment_methods={
+                    'enabled': True,
+                },
+                description=product.description
+            )
+            return JsonResponse({
+                'clientSecret': intent['client_secret']
+            })
+        except Exception as e:
+            return JsonResponse({"error": str(e)})
 
 
 class ProductLandingPageView(TemplateView):
