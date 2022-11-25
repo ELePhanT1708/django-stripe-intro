@@ -14,9 +14,17 @@
 
 (Если нет докера) После клонирования моего репозитория нужно:
 1. Сделать виртуальное окружение у себя
+
+
 ----- python -m venv test_env ( в корне клонированного репозитория)
+
+
 .\test_env\Scripts\Activate.ps1 (активируем окружение ) 
+
+
 pip install -r .\requirements.txt (устанавливаем необходимые зависимости) 
+
+
 py .\tutorial\manage.py runserver (запускаем сервер )
 
 http://localhost:8000/items/
