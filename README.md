@@ -1,6 +1,6 @@
 # django-stripe-intro
-Привет , работодатель ! 
-Я разобрался как интегрировать stripe payments to your project.
+Привет , ! 
+Я частично разобрался как интегрировать stripe payments to your project.
 
 (Если есть докер десктоп) 
 
